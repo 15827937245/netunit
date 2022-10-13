@@ -5,6 +5,8 @@ import android.os.Environment;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -142,13 +144,32 @@ public class OkhttpUnit extends BaseUnit{
 
         @Override
         public void onFailure(@NonNull Call call, @NonNull IOException e) {
-            mNetUnitCallback.onFailure();
+            mNetUnitCallback.onFailure("系统异常");
+            mNetUnitCallback.onEnd();
         }
 
         @Override
         public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-            mNetUnitCallback.onSuccess(response);
-            mNetUnitCallback.onEnd();
+            String result = response.body().string();
+            //result为null或者为""时，是无法进行后续处理的，直接返回。
+            if (result == null || result.toString().trim().equals("")) {
+                mNetUnitCallback.onFailure("数据为空");
+                return;
+            }
+
+            try {
+                JSONObject resultObj = new JSONObject(result);
+                if (resultObj.has("code") && resultObj.has("msg")) {
+                    mNetUnitCallback.onSuccess(result);
+                }else{
+                    //返回的数据格式不符合要求。
+                    mNetUnitCallback.onFailure("返回的数据格式不符合要求。");
+                }
+            } catch (Exception e) {
+                mNetUnitCallback.onFailure("系统异常");
+            }finally {
+                mNetUnitCallback.onEnd();
+            }
         }
     }
     

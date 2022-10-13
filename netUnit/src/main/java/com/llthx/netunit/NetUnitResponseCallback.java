@@ -4,7 +4,7 @@ import okhttp3.Response;
 
 public interface NetUnitResponseCallback {
     void onStart();
-    void onFailure();
-    void onSuccess(Response response);
+    void onFailure(String reason);
+    void onSuccess(String json);
     void onEnd();
 }

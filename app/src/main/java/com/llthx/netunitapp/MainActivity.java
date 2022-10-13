@@ -50,14 +50,14 @@ private Handler mHandler = new Handler(Looper.getMainLooper()){
                 }
 
                 @Override
-                public void onFailure() {
+                public void onFailure(String reason) {
 
                 }
 
                 @Override
-                public void onSuccess(Response response) {
+                public void onSuccess(String json) {
                     Message message = new Message();
-                    message.obj = response.body().toString();
+                    message.obj = json;
                     mHandler.sendMessageDelayed(message,3000);
                 }
 
