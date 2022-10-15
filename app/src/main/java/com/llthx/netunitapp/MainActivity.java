@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,6 +15,9 @@ import com.llthx.netunit.NetUnitClient;
 import com.llthx.netunit.NetUnitInterface;
 import com.llthx.netunit.NetUnitResponseCallback;
 import com.llthx.netunit.OkhttpUnit;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import okhttp3.Response;
 
@@ -41,9 +45,18 @@ private Handler mHandler = new Handler(Looper.getMainLooper()){
 
     public void getMsg(View view) {
         new Thread(()->{
-            String result = mNetUnit.GET("http://192.168.31.245:8888/getMsg");
-            //String result1 = mNetUnit.GET("https://192.168.31.245:8888/getMsg");
-            mNetUnit.GET("http://192.168.31.245:8888/getMsg", new NetUnitResponseCallback() {
+            //String result = mNetUnit.GET("http://192.168.31.245:8088/login");
+            String id = "test1";
+            String password = "123456";
+            JSONObject json = new JSONObject();
+            try {
+                json.put("id",id);
+                json.put("password",password);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            mNetUnit.POST("http://192.168.31.245:8088/login",json.toString(),new NetUnitResponseCallback() {
                 @Override
                 public void onStart() {
 
@@ -56,6 +69,7 @@ private Handler mHandler = new Handler(Looper.getMainLooper()){
 
                 @Override
                 public void onSuccess(String json) {
+                    Log.d("onSuccess","json : " + json);
                     Message message = new Message();
                     message.obj = json;
                     mHandler.sendMessageDelayed(message,3000);
@@ -66,9 +80,9 @@ private Handler mHandler = new Handler(Looper.getMainLooper()){
 
                 }
             });
-            Message message = new Message();
-            message.obj = result;
-            mHandler.sendMessage(message);
+//            Message message = new Message();
+//            message.obj = result;
+//            mHandler.sendMessage(message);
         }).start();
     }
 }

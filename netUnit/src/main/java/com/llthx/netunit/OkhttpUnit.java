@@ -2,6 +2,7 @@ package com.llthx.netunit;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -22,6 +23,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class OkhttpUnit extends BaseUnit{
+    private String TAG = "OkhttpUnit";
 
 
     private OkHttpClient client;
@@ -144,12 +146,16 @@ public class OkhttpUnit extends BaseUnit{
 
         @Override
         public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            Log.d(TAG,"MyCallback,onFailure");
+
             mNetUnitCallback.onFailure("系统异常");
             mNetUnitCallback.onEnd();
         }
 
         @Override
         public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            Log.d(TAG,"MyCallback,onResponse");
+
             String result = response.body().string();
             //result为null或者为""时，是无法进行后续处理的，直接返回。
             if (result == null || result.toString().trim().equals("")) {
@@ -160,12 +166,16 @@ public class OkhttpUnit extends BaseUnit{
             try {
                 JSONObject resultObj = new JSONObject(result);
                 if (resultObj.has("code") && resultObj.has("msg")) {
+
+                    Log.d(TAG,"MyCallback,onResponse: onSuccess");
                     mNetUnitCallback.onSuccess(result);
                 }else{
                     //返回的数据格式不符合要求。
+                    Log.d(TAG,"MyCallback,onResponse: onFailure");
                     mNetUnitCallback.onFailure("返回的数据格式不符合要求。");
                 }
             } catch (Exception e) {
+                Log.d(TAG,"MyCallback,onResponse: error");
                 mNetUnitCallback.onFailure("系统异常");
             }finally {
                 mNetUnitCallback.onEnd();
