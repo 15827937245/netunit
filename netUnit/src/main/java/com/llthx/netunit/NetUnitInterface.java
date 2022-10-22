@@ -1,5 +1,7 @@
 package com.llthx.netunit;
 
+import android.content.Context;
+
 import java.net.URL;
 import java.util.Map;
 
@@ -19,7 +21,7 @@ public interface NetUnitInterface {
     void setCacheMaxSize(int cacheMaxSize);
     void setCachePath(String path);
     void init();
-    boolean checkPermission();
+    boolean checkPermission(Context context);
     String[] getPermissions();
     <T> T JsonToObject(Class clazz,String json);
     String ObjectToJson(Object o);

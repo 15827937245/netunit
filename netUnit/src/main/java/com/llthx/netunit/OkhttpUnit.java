@@ -28,8 +28,8 @@ public class OkhttpUnit extends BaseUnit{
 
     private OkHttpClient client;
 
-    public OkhttpUnit(Context context){
-        super(context);
+    public OkhttpUnit(){
+        super();
         init();
     }
 
@@ -157,6 +157,8 @@ public class OkhttpUnit extends BaseUnit{
             Log.d(TAG,"MyCallback,onResponse");
 
             String result = response.body().string();
+            Log.d(TAG,"MyCallback,onResponse:result : " + result);
+
             //result为null或者为""时，是无法进行后续处理的，直接返回。
             if (result == null || result.toString().trim().equals("")) {
                 mNetUnitCallback.onFailure("数据为空");

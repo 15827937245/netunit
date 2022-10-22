@@ -34,9 +34,9 @@ private Handler mHandler = new Handler(Looper.getMainLooper()){
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mNetUnit = NetUnitClient.getNetUnitClient(new OkhttpUnit(getApplicationContext()));
+        mNetUnit = NetUnitClient.getNetUnitClient(new OkhttpUnit());
 
-        if (!mNetUnit.checkPermission()) {
+        if (!mNetUnit.checkPermission(getApplicationContext())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(mNetUnit.getPermissions(),1000);
             }
@@ -56,7 +56,7 @@ private Handler mHandler = new Handler(Looper.getMainLooper()){
                 e.printStackTrace();
             }
 
-            mNetUnit.POST("http://192.168.31.245:8088/login",json.toString(),new NetUnitResponseCallback() {
+            mNetUnit.POST("http://192.168.31.245:8088/getUserInfo",json.toString(),new NetUnitResponseCallback() {
                 @Override
                 public void onStart() {
 
@@ -70,6 +70,7 @@ private Handler mHandler = new Handler(Looper.getMainLooper()){
                 @Override
                 public void onSuccess(String json) {
                     Log.d("onSuccess","json : " + json);
+
                     Message message = new Message();
                     message.obj = json;
                     mHandler.sendMessageDelayed(message,3000);

@@ -16,18 +16,12 @@ public abstract class BaseUnit implements NetUnitInterface{
     public static final long DEFAULT_MAX_CACHE_SIZE = 50*1024*1024;
     public static final String DEFAULT_CACHE_PATH = Environment.getExternalStorageDirectory()+"/OkHttp/cache";
     public static String[] NEED_PERMISSION = {"android.permission.INTERNET","android.permission.READ_EXTERNAL_STORAGE","android.permission.WRITE_EXTERNAL_STORAGE"};
-    protected Context mContext;
 
     protected long mMaxSize;
     protected String mCachePath;
     protected File mCacheFile;
     protected Gson mGson;
     private String TAG = "BaseUnit";
-
-    public BaseUnit(Context context){
-        this.mContext = context;
-    }
-
 
     @Override
     public void setCacheMaxSize(int cacheMaxSize) {
@@ -68,9 +62,9 @@ public abstract class BaseUnit implements NetUnitInterface{
     }
 
     @Override
-    public boolean checkPermission() {
+    public boolean checkPermission(Context context) {
         for (int i = 0; i < NEED_PERMISSION.length; i++) {
-            int result = ContextCompat.checkSelfPermission(mContext,NEED_PERMISSION[i]);
+            int result = ContextCompat.checkSelfPermission(context,NEED_PERMISSION[i]);
 
             if(result != PackageManager.PERMISSION_GRANTED){
                 return false;
