@@ -46,11 +46,15 @@ private Handler mHandler = new Handler(Looper.getMainLooper()){
     public void getMsg(View view) {
         new Thread(()->{
             try {
-                String result = mNetUnit.GET("http://192.168.31.245:8088/login");
+                String result = mNetUnit.GET("http://192.168.31.245:8088/test");
                 Message message = new Message();
                 message.obj = result;
-                mHandler.sendMessageDelayed(message,3000);
+                mHandler.sendMessage(message);
             } catch (Exception e) {
+                String result = "异常";
+                Message message = new Message();
+                message.obj = result;
+                mHandler.sendMessage(message);
             }
 
             String id = "test1";
