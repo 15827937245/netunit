@@ -15,7 +15,7 @@ public interface NetUnitInterface {
     void GET(String url, NetUnitResponseCallback callback);
     String POST(URL url, Map map) throws IOException;
     void POST(URL url, Map map, NetUnitResponseCallback callback);
-    String POST(String url, Map map);
+    String POST(String url, Map map) throws IOException;
     void POST(String url, Map map, NetUnitResponseCallback callback);
     String POST(String url, String json) throws IOException;
     void POST(String url, String json, NetUnitResponseCallback callback);

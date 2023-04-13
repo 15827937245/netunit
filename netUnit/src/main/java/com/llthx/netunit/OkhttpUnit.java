@@ -116,7 +116,7 @@ public class OkhttpUnit extends BaseUnit {
     }
 
     @Override
-    public String POST(String url, Map map) {
+    public String POST(String url, Map map) throws IOException {
         return doPost(url, map.toString());
     }
 
