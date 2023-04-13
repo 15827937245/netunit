@@ -45,7 +45,14 @@ private Handler mHandler = new Handler(Looper.getMainLooper()){
 
     public void getMsg(View view) {
         new Thread(()->{
-            //String result = mNetUnit.GET("http://192.168.31.245:8088/login");
+            try {
+                String result = mNetUnit.GET("http://192.168.31.245:8088/login");
+                Message message = new Message();
+                message.obj = result;
+                mHandler.sendMessageDelayed(message,3000);
+            } catch (Exception e) {
+            }
+
             String id = "test1";
             String password = "123456";
             JSONObject json = new JSONObject();
@@ -56,31 +63,31 @@ private Handler mHandler = new Handler(Looper.getMainLooper()){
                 e.printStackTrace();
             }
 
-            mNetUnit.POST("http://192.168.31.245:8088/getUserInfo",json.toString(),new NetUnitResponseCallback() {
-                @Override
-                public void onStart() {
-
-                }
-
-                @Override
-                public void onFailure(String reason) {
-
-                }
-
-                @Override
-                public void onSuccess(String json) {
-                    Log.d("onSuccess","json : " + json);
-
-                    Message message = new Message();
-                    message.obj = json;
-                    mHandler.sendMessageDelayed(message,3000);
-                }
-
-                @Override
-                public void onEnd() {
-
-                }
-            });
+//            mNetUnit.POST("http://192.168.31.245:8088/getUserInfo",json.toString(),new NetUnitResponseCallback() {
+//                @Override
+//                public void onStart() {
+//
+//                }
+//
+//                @Override
+//                public void onFailure(String reason) {
+//
+//                }
+//
+//                @Override
+//                public void onSuccess(String json) {
+//                    Log.d("onSuccess","json : " + json);
+//
+//                    Message message = new Message();
+//                    message.obj = json;
+//                    mHandler.sendMessageDelayed(message,3000);
+//                }
+//
+//                @Override
+//                public void onEnd() {
+//
+//                }
+//            });
 //            Message message = new Message();
 //            message.obj = result;
 //            mHandler.sendMessage(message);

@@ -9,15 +9,15 @@ import java.util.Map;
 import okhttp3.Callback;
 
 public interface NetUnitInterface {
-    String GET(URL url) throws IOException;
+    String GET(URL url) throws Exception;
     void GET(URL url, NetUnitResponseCallback callback);
-    String GET(String url) throws IOException;
+    String GET(String url) throws Exception;
     void GET(String url, NetUnitResponseCallback callback);
-    String POST(URL url, Map map) throws IOException;
+    String POST(URL url, Map map) throws Exception;
     void POST(URL url, Map map, NetUnitResponseCallback callback);
-    String POST(String url, Map map) throws IOException;
+    String POST(String url, Map map) throws Exception;
     void POST(String url, Map map, NetUnitResponseCallback callback);
-    String POST(String url, String json) throws IOException;
+    String POST(String url, String json) throws Exception;
     void POST(String url, String json, NetUnitResponseCallback callback);
     void setCacheMaxSize(int cacheMaxSize);
     void setCachePath(String path);

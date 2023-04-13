@@ -60,7 +60,7 @@ public class OkhttpUnit extends BaseUnit {
     }
 
 
-    private String doGet(String url) throws IOException {
+    private String doGet(String url) throws Exception {
         return execute(getRequest(url));
     }
 
@@ -68,7 +68,7 @@ public class OkhttpUnit extends BaseUnit {
         enqueue(getRequest(url), new MyCallback(callback));
     }
 
-    private String doPost(String url, String json) throws IOException {
+    private String doPost(String url, String json) throws Exception {
         return execute(getRequest(url, json));
     }
 
@@ -76,7 +76,7 @@ public class OkhttpUnit extends BaseUnit {
         enqueue(getRequest(url, json), new MyCallback(callback));
     }
 
-    private String execute(Request request) throws IOException {
+    private String execute(Request request) throws Exception {
         Response response = client.newCall(request).execute();
         return response.body().string();
     }
@@ -86,7 +86,7 @@ public class OkhttpUnit extends BaseUnit {
     }
 
     @Override
-    public String GET(URL url) throws IOException {
+    public String GET(URL url) throws Exception {
         return doGet(url.getPath());
     }
 
@@ -96,7 +96,7 @@ public class OkhttpUnit extends BaseUnit {
     }
 
     @Override
-    public String GET(String url) throws IOException {
+    public String GET(String url) throws Exception {
         return doGet(url);
     }
 
@@ -106,7 +106,7 @@ public class OkhttpUnit extends BaseUnit {
     }
 
     @Override
-    public String POST(URL url, Map map) throws IOException {
+    public String POST(URL url, Map map) throws Exception {
         return doPost(url.getPath(), map.toString());
     }
 
@@ -116,7 +116,7 @@ public class OkhttpUnit extends BaseUnit {
     }
 
     @Override
-    public String POST(String url, Map map) throws IOException {
+    public String POST(String url, Map map) throws Exception {
         return doPost(url, map.toString());
     }
 
@@ -126,7 +126,7 @@ public class OkhttpUnit extends BaseUnit {
     }
 
     @Override
-    public String POST(String url, String json) throws IOException {
+    public String POST(String url, String json) throws Exception {
         return doPost(url, json);
     }
 
