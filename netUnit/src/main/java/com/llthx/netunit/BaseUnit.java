@@ -19,6 +19,8 @@ public abstract class BaseUnit implements NetUnitInterface{
 
     protected long mMaxSize;
     protected String mCachePath;
+
+    protected int connectTimeout = 10;
     protected File mCacheFile;
     protected Gson mGson;
     private String TAG = "BaseUnit";
@@ -75,6 +77,11 @@ public abstract class BaseUnit implements NetUnitInterface{
 
         return true;
     };
+
+
+    public void setConnectTimeout(int connectTimeout) {
+        this.connectTimeout = connectTimeout;
+    }
 
     @Override
     public String ObjectToJson(Object o) {
