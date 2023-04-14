@@ -3,8 +3,8 @@ package com.llthx.netunit;
 import okhttp3.Response;
 
 public interface NetUnitResponseCallback {
-    void onStart();
-    void onFailure(String reason);
-    void onSuccess(String json);
-    void onEnd();
+    default void onStart(){};
+    default void onFailure(String reason){};
+    default void onSuccess(String json){};
+    default void onEnd(){};
 }
